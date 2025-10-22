@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="form-section">
+    <view class="form-item">
+      <text class="label">运动类型:</text>
+      <input type="text" bindinput="onTypeChange" placeholder="例如：跑步、健身" value="{{exerciseType}}" />
+    </view>
+    <view class="form-item">
+      <text class="label">时长 (分钟):</text>
+      <input type="number" bindinput="onDurationChange" placeholder="例如：30" value="{{duration}}" />
+    </view>
+    <view class="form-item">
+      <text class="label">距离 (公里):</text>
+      <input type="digit" bindinput="onDistanceChange" placeholder="例如：5.5" value="{{distance}}" />
+    </view>
+    <view class="form-item">
+      <text class="label">备注:</text>
+      <textarea bindinput="onNotesChange" placeholder="记录您的感受或要点" value="{{notes}}"></textarea>
+    </view>
+  </view>
+  <view class="button-section">
+    <button bindtap="saveExercise">保存运动记录</button>
+  </view>
+</view>

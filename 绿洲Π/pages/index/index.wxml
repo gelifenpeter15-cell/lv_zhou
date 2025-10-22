@@ -1,0 +1,48 @@
+<view class="container">
+  <!-- Weather forecast section - Only keep this on homepage -->
+  <view class="weather-section">
+    <text class="weather-city">{{weather.city}}</text>
+    <view class="weather-details">
+      <text class="weather-icon">{{weather.icon}}</text>
+      <text class="weather-temperature">{{weather.temperature}}°C</text>
+      <text class="weather-description">{{weather.description}}</text>
+    </view>
+    
+    <!-- 天气详细信息 -->
+<view class="weather-info">
+  <view class="info-item">
+    <text class="info-label">风速</text>
+    <text class="info-value">{{weather.windSpeed}} km/h</text>
+  </view>
+  <view class="info-item">
+    <text class="info-label">湿度</text>
+    <text class="info-value">{{weather.humidity}}%</text>
+  </view>
+</view>
+
+<!-- 位置刷新按钮 -->
+<view class="refresh-button-container">
+  <button class="refresh-button" bindtap="refreshLocation">刷新位置</button>
+</view>
+  </view>
+  
+  <!-- 出行建议部分 -->
+  <view class="travel-advice-section" wx:if="{{travelAdvice}}">
+    <view class="advice-header">
+      <text class="advice-title">出行建议</text>
+      <text class="advice-level level-{{travelAdvice.level}}">
+        <text wx:if="{{travelAdvice.level === 'excellent'}}">优秀</text>
+        <text wx:elif="{{travelAdvice.level === 'good'}}">良好</text>
+        <text wx:elif="{{travelAdvice.level === 'fair'}}">一般</text>
+        <text wx:elif="{{travelAdvice.level === 'poor'}}">较差</text>
+        <text wx:else>{{travelAdvice.level}}</text>
+      </text>
+    </view>
+    <view class="advice-content">
+      <text class="advice-text">{{travelAdvice.suggestion}}</text>
+      <view class="advice-icon" wx:if="{{travelAdvice.icon}}">
+        <text>{{travelAdvice.icon}}</text>
+      </view>
+    </view>
+  </view>
+</view>

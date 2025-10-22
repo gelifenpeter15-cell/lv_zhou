@@ -1,0 +1,49 @@
+<!-- 天气API测试页面 -->
+<view class="test-container">
+  <view class="test-header">
+    <text class="test-title">天气API测试</text>
+  </view>
+  
+  <view class="test-status">
+    <text class="status-label">测试状态：</text>
+    <text class="status-value {{apiStatus}}">{{testResult}}</text>
+  </view>
+  
+  <view class="weather-info" wx:if="{{weatherData}}">
+    <view class="info-section">
+      <text class="section-title">当前天气数据：</text>
+      
+      <view class="data-item">
+        <text class="item-label">城市：</text>
+        <text class="item-value">北京</text>
+      </view>
+      
+      <view class="data-item">
+        <text class="item-label">温度：</text>
+        <text class="item-value">{{weatherData.current_condition[0].temp_C}}°C</text>
+      </view>
+      
+      <view class="data-item">
+        <text class="item-label">天气：</text>
+        <text class="item-value">{{weatherData.weather[0].weatherDesc[0].value}}</text>
+      </view>
+      
+      <view class="data-item">
+        <text class="item-label">风速：</text>
+        <text class="item-value">{{weatherData.current_condition[0].windspeedKmph}} km/h</text>
+      </view>
+      
+      <view class="data-item">
+        <text class="item-label">湿度：</text>
+        <text class="item-value">{{weatherData.current_condition[0].humidity}}%</text>
+      </view>
+    </view>
+    
+    <view class="raw-data">
+      <text class="section-title">原始数据：</text>
+      <text class="raw-json">{{weatherData}}</text>
+    </view>
+  </view>
+  
+  <button class="retry-btn" bindtap="testWeatherAPI">重新测试</button>
+</view>

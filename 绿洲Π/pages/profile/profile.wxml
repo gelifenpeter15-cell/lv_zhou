@@ -1,0 +1,174 @@
+<view class="container">
+  <view class="header">
+    <text class="title">我的</text>
+  </view>
+
+  <view class="profile-section">
+    <block wx:if="{{hasUserInfo}}">
+      <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="user-nickname">{{userInfo.nickName}}</text>
+    </block>
+    <block wx:else>
+      <button class="login-button" bindtap="getUserProfile">
+        <text>登录/获取信息</text>
+      </button>
+    </block>
+  </view>
+
+  <!-- Options Section -->
+  <view class="options-section">
+    <view class="option-item" bindtap="toggleExerciseSection">
+      <text>运动记录</text>
+      <text class="arrow">{{showExerciseSection ? '▲' : '▼'}}</text>
+    </view>
+    <view class="option-item" bindtap="toggleTravelSection">
+      <text>出行计划</text>
+      <text class="arrow">{{showTravelSection ? '▲' : '▼'}}</text>
+    </view>
+    <view class="option-item" bindtap="goToSettings">
+      <text>设置</text>
+      <text class="arrow">→</text>
+    </view>
+    <view class="option-item" bindtap="goToAboutUs">
+      <text>关于我们</text>
+      <text class="arrow">→</text>
+    </view>
+    <block wx:if="{{hasUserInfo}}">
+      <view class="option-item" bindtap="logout">
+        <text>退出登录</text>
+        <text class="arrow">→</text>
+      </view>
+    </block>
+  </view>
+
+  <!-- Exercise Record Section -->
+  <view class="feature-section" wx:if="{{showExerciseSection}}">
+    <view class="section-header">
+      <text class="subtitle">运动记录</text>
+      <button class="add-button" bindtap="addNewExerciseRecord">+</button>
+    </view>
+
+    <block wx:if="{{exerciseRecords.length > 0}}">
+      <view wx:for="{{exerciseRecords}}" wx:key="id" class="exercise-item">
+        <view class="item-content">
+          <text class="item-title">{{item.title}}</text>
+          <text class="item-date">{{item.date}}</text>
+          <!-- Add more details here if available -->
+        </view>
+        <view class="item-actions">
+          <!-- Add edit/delete buttons here if needed -->
+          <button class="edit-button" bindtap="editExerciseRecord" data-id="{{item.id}}">编辑</button>
+          <button class="delete-button" bindtap="deleteExerciseRecord" data-id="{{item.id}}">删除</button>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="placeholder-content">
+        <text>暂无运动记录。点击右上角“+”添加新的记录。</text>
+      </view>
+    </block>
+  </view>
+
+  <!-- Travel Plan Section -->
+  <view class="feature-section" wx:if="{{showTravelSection}}">
+    <view class="section-header">
+      <text class="subtitle">出行计划</text>
+    </view>
+
+    <!-- Content from pages/travel/travel.wxml -->
+    <view class="input-section">
+      <view class="input-group">
+        <label for="destination">目的地:</label>
+        <input id="destination" type="text" placeholder="请输入目的地名称" value="{{destination}}" bindinput="onDestinationChange" />
+      </view>
+      <view class="input-group">
+        <label for="startDate">开始日期:</label>
+        <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+          <view class="picker">{{startDate || '选择日期'}}</view>
+        </picker>
+      </view>
+      <view class="input-group">
+        <label for="endDate">结束日期:</label>
+        <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+          <view class="picker">{{endDate || '选择日期'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="map-section">
+      <map id="travelMap"
+           style="width: 100%; height: 400px;"
+           latitude="{{latitude}}"
+           longitude="{{longitude}}"
+           markers="{{markers}}"
+           polyline="{{polyline}}"
+           show-location="{{true}}"
+           enable-scroll="{{true}}"
+           enable-rotate="{{true}}"
+           ></map>
+    </view>
+
+    <view class="input-section route-planning">
+      <view class="input-group">
+        <label for="startLocation">起点:</label>
+        <input id="startLocation" type="text" placeholder="请输入起点" value="{{startLocation}}" bindinput="onStartLocationChange" />
+      </view>
+      <view class="input-group">
+        <label for="endLocation">终点:</label>
+        <input id="endLocation" type="text" placeholder="请输入终点" value="{{endLocation}}" bindinput="onEndLocationChange" />
+      </view>
+      <button class="action-button" bindtap="calculateRoute">计算路线</button>
+    </view>
+
+    <view class="itinerary-section">
+      <view class="itinerary-header">
+        <text class="subtitle">行程安排</text>
+        <button class="add-button" bindtap="addItineraryItem">+</button>
+      </view>
+
+      <block wx:if="{{isAddingItinerary || editingItineraryItem}}">
+        <view class="itinerary-form">
+          <view class="input-group">
+            <label for="itineraryTitle">标题:</label>
+            <input id="itineraryTitle" type="text" placeholder="例如：参观博物馆" value="{{itineraryTitle}}" bindinput="onItineraryTitleChange" />
+          </view>
+          <view class="input-group">
+            <label for="itineraryTime">时间:</label>
+            <input id="itineraryTime" type="text" placeholder="例如：上午10:00" value="{{itineraryTime}}" bindinput="onItineraryTimeChange" />
+          </view>
+          <view class="input-group">
+            <label for="itineraryDescription">描述:</label>
+            <textarea id="itineraryDescription" placeholder="例如：参观当地著名的博物馆" value="{{itineraryDescription}}" bindinput="onItineraryDescriptionChange"></textarea>
+          </view>
+          <view class="form-actions">
+            <button class="confirm-button" bindtap="confirmItineraryItem">{{editingItineraryItem ? '更新行程' : '添加行程'}}</button>
+            <button class="cancel-button" bindtap="cancelItineraryEdit">取消</button>
+          </view>
+        </view>
+      </block>
+
+      <block wx:if="{{itinerary.length > 0 && !isAddingItinerary && !editingItineraryItem}}">
+        <view wx:for="{{itinerary}}" wx:key="id" class="itinerary-item">
+          <view class="item-content">
+            <text class="item-time">{{item.time}}</text>
+            <text class="item-title">{{item.title}}</text>
+            <text class="item-description">{{item.description}}</text>
+          </view>
+          <view class="item-actions">
+            <button class="edit-button" bindtap="editItineraryItem" data-id="{{item.id}}">编辑</button>
+            <button class="delete-button" bindtap="deleteItineraryItem" data-id="{{item.id}}">删除</button>
+          </view>
+        </view>
+      </block>
+      <block wx:elif="{{!isAddingItinerary && !editingItineraryItem}}">
+        <text class="no-itinerary">暂无行程安排，点击上方“+”添加。</text>
+      </block>
+    </view>
+
+    <view class="action-buttons">
+      <button class="action-button" bindtap="saveTravelPlan">保存计划</button>
+      <button class="action-button reset-button" bindtap="resetTravelForm">重置表单</button>
+    </view>
+  </view>
+
+</view>

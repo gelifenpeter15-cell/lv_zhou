@@ -1,0 +1,117 @@
+.exercise-logging-section {
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  padding: 40rpx;
+  border-radius: 16rpx;
+  margin-bottom: 40rpx;
+  width: 90%; /* Occupy most of the width */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items within the section */
+}
+
+.exercise-logs-section {
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  padding: 40rpx;
+  border-radius: 16rpx;
+  width: 90%; /* Occupy most of the width */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items within the section */
+}
+
+.section-title {
+  font-size: 48rpx; /* Larger font size for titles */
+  font-weight: bold;
+  color: #2c3e50; /* Darker color for titles */
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%; /* Full width within its container */
+  padding: 25rpx 30rpx;
+  margin-bottom: 20rpx;
+  border: 1px solid #ccc; /* Light grey border */
+  border-radius: 10rpx;
+  font-size: 32rpx;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-field:focus {
+  border-color: #3498db; /* Highlight border on focus */
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Subtle glow on focus */
+  outline: none; /* Remove default outline */
+}
+
+.submit-button {
+  background-color: #2ecc71; /* Green color for submit */
+  color: white;
+  padding: 25rpx 40rpx;
+  border: none;
+  border-radius: 10rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 20rpx; /* Space above the button */
+  width: 100%; /* Make button full width */
+}
+
+.submit-button:hover {
+  background-color: #27ae60; /* Darker green on hover */
+  transform: translateY(-2px);
+}
+
+.no-logs-message {
+  font-size: 32rpx;
+  color: #7f8c8d; /* Muted color for message */
+  margin-top: 40rpx;
+}
+
+.log-list {
+  width: 100%;
+  text-align: left; /* Align log details to the left */
+}
+
+.log-item {
+  background-color: #f9f9f9; /* Light background for each log item */
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column; /* Stack details vertically */
+  align-items: flex-start; /* Align items to the start */
+  gap: 10rpx; /* Space between elements in a log item */
+}
+
+.log-date {
+  font-size: 28rpx;
+  color: #95a5a6; /* Muted color for date */
+  font-weight: bold;
+}
+
+.log-detail {
+  font-size: 32rpx;
+  color: #34495e; /* Darker color for details */
+}
+
+.delete-button {
+  background-color: #e74c3c; /* Red color for delete */
+  color: white;
+  padding: 10rpx 20rpx;
+  border: none;
+  border-radius: 6rpx;
+  font-size: 28rpx;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: auto; /* Push delete button to the right */
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}

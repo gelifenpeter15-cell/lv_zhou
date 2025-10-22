@@ -1,0 +1,45 @@
+<view class="container">
+  <!-- Exercise Logging Section -->
+  <view class="exercise-logging-section">
+    <text class="section-title">记录新的运动</text>
+    <input 
+      type="text" 
+      placeholder="运动类型 (例如：跑步, 瑜伽)" 
+      bindinput="onExerciseTypeInput"
+      value="{{exerciseType}}"
+      class="input-field"
+    />
+    <input 
+      type="text" 
+      placeholder="时长 (例如：30分钟)" 
+      bindinput="onDurationInput"
+      value="{{duration}}"
+      class="input-field"
+    />
+    <input 
+      type="text" 
+      placeholder="强度 (例如：中等, 高)" 
+      bindinput="onIntensityInput"
+      value="{{intensity}}"
+      class="input-field"
+    />
+    <button class="submit-button" bindtap="addExerciseLog">添加记录</button>
+  </view>
+
+  <!-- Display Exercise Logs Section -->
+  <view class="exercise-logs-section">
+    <text class="section-title">我的运动记录</text>
+    <view wx:if="{{exerciseLogs.length === 0}}" class="no-logs-message">
+      暂无运动记录。
+    </view>
+    <view wx:else class="log-list">
+      <view wx:for="{{exerciseLogs}}" wx:key="id" class="log-item">
+        <text class="log-date">{{item.date}}</text>
+        <text class="log-detail">{{item.type}} - {{item.duration}} - {{item.intensity}}</text>
+        <button class="delete-button" bindtap="deleteExerciseLog" data-id="{{item.id}}">删除</button>
+        <!-- Optionally, add a link to view details -->
+        <!-- <navigator url="../exercise-detail/exercise-detail?id={{item.id}}">查看详情</navigator> -->
+      </view>
+    </view>
+  </view>
+</view>

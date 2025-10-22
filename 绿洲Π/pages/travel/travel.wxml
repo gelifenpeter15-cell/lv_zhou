@@ -1,0 +1,101 @@
+<view class="container">
+  <view class="header">
+    <text class="title">出行计划</text>
+  </view>
+
+  <view class="input-section">
+    <view class="input-group">
+      <label for="destination">目的地:</label>
+      <input id="destination" type="text" placeholder="请输入目的地名称" value="{{destination}}" bindinput="onDestinationChange" />
+    </view>
+    <view class="input-group">
+      <label for="startDate">开始日期:</label>
+      <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+        <view class="picker">{{startDate || '选择日期'}}</view>
+      </picker>
+    </view>
+    <view class="input-group">
+      <label for="endDate">结束日期:</label>
+      <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+        <view class="picker">{{endDate || '选择日期'}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="map-section">
+    <map id="travelMap"
+         style="width: 100%; height: 400px;"
+         latitude="{{latitude}}"
+         longitude="{{longitude}}"
+         scale="12"
+         markers="{{markers}}"
+         polyline="{{polyline}}"
+         show-location="{{true}}"
+         enable-scroll="{{true}}"
+         enable-rotate="{{true}}"
+         bindtap="onMapTap"
+         ></map>
+  </view>
+
+  <view class="input-section route-planning">
+    <view class="input-group">
+      <label for="startLocation">起点:</label>
+      <input id="startLocation" type="text" placeholder="请输入起点" value="{{startLocation}}" bindinput="onStartLocationChange" />
+    </view>
+    <view class="input-group">
+      <label for="endLocation">终点:</label>
+      <input id="endLocation" type="text" placeholder="请输入终点" value="{{endLocation}}" bindinput="onEndLocationChange" />
+    </view>
+    <button class="action-button" bindtap="calculateRoute">计算路线</button>
+  </view>
+
+  <view class="itinerary-section">
+    <view class="section-header">
+      <text class="subtitle">行程安排</text>
+      <button class="add-button" bindtap="addItineraryItem">+</button>
+    </view>
+
+    <block wx:if="{{isAddingItinerary || editingItineraryItem}}">
+      <view class="itinerary-form">
+        <view class="input-group">
+          <label for="itineraryTitle">标题:</label>
+          <input id="itineraryTitle" type="text" placeholder="例如：参观博物馆" value="{{itineraryTitle}}" bindinput="onItineraryTitleChange" />
+        </view>
+        <view class="input-group">
+          <label for="itineraryTime">时间:</label>
+          <input id="itineraryTime" type="text" placeholder="例如：上午10:00" value="{{itineraryTime}}" bindinput="onItineraryTimeChange" />
+        </view>
+        <view class="input-group">
+          <label for="itineraryDescription">描述:</label>
+          <textarea id="itineraryDescription" placeholder="例如：参观当地著名的博物馆" value="{{itineraryDescription}}" bindinput="onItineraryDescriptionChange"></textarea>
+        </view>
+        <view class="form-actions">
+          <button class="confirm-button" bindtap="confirmItineraryItem">{{editingItineraryItem ? '更新行程' : '添加行程'}}</button>
+          <button class="cancel-button" bindtap="cancelItineraryEdit">取消</button>
+        </view>
+      </view>
+    </block>
+
+    <block wx:if="{{itinerary.length > 0 && !isAddingItinerary && !editingItineraryItem}}">
+      <view wx:for="{{itinerary}}" wx:key="id" class="itinerary-item">
+        <view class="item-content">
+          <text class="item-time">{{item.time}}</text>
+          <text class="item-title">{{item.title}}</text>
+          <text class="item-description">{{item.description}}</text>
+        </view>
+        <view class="item-actions">
+          <button class="edit-button" bindtap="editItineraryItem" data-id="{{item.id}}">编辑</button>
+          <button class="delete-button" bindtap="deleteItineraryItem" data-id="{{item.id}}">删除</button>
+        </view>
+      </view>
+    </block>
+    <block wx:elif="{{!isAddingItinerary && !editingItineraryItem}}">
+      <text class="no-itinerary">暂无行程安排，点击上方“+”添加。</text>
+    </block>
+  </view>
+
+  <view class="action-buttons">
+    <button class="action-button" bindtap="saveTravelPlan">保存计划</button>
+    <button class="action-button reset-button" bindtap="resetTravelForm">重置表单</button>
+  </view>
+</view>
